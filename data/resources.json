@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Falling Fruit",
+    "url": "https://fallingfruit.org/",
+    "repo": "https://github.com/falling-fruit",
+    "kind": "Foraging map",
+    "description": "An open-source, crowd-mapped atlas of urban fruit trees and forageable plants. LA has thousands of loquat, fig, and citrus trees on public land."
+  },
+  {
+    "name": "iNaturalist",
+    "url": "https://www.inaturalist.org/",
+    "repo": "https://github.com/inaturalist/inaturalist",
+    "kind": "Nature ID",
+    "description": "Photograph a plant, bug, or bird on your camping trip and the community helps identify it. Observations feed open biodiversity data used by scientists."
+  },
+  {
+    "name": "OpenStreetMap",
+    "url": "https://www.openstreetmap.org/",
+    "repo": "https://github.com/openstreetmap",
+    "kind": "Open maps",
+    "description": "The Wikipedia of maps. Trail and campground data you can download, edit, and use offline in apps like Organic Maps."
+  },
+  {
+    "name": "Organic Maps",
+    "url": "https://organicmaps.app/",
+    "repo": "https://github.com/organicmaps/organicmaps",
+    "kind": "Offline maps",
+    "description": "A free, private offline maps app built on OpenStreetMap. Useful when you lose cell signal in Joshua Tree or the Sierra."
+  },
+  {
+    "name": "Recreation Information Database (RIDB)",
+    "url": "https://ridb.recreation.gov/",
+    "repo": null,
+    "kind": "Open data API",
+    "description": "The federal open-data API behind Recreation.gov, with campgrounds, facilities, and activities. Good raw material for building on top of this site."
+  },
+  {
+    "name": "Open Food Facts",
+    "url": "https://world.openfoodfacts.org/",
+    "repo": "https://github.com/openfoodfacts",
+    "kind": "Food database",
+    "description": "A collaborative, open database of food products and ingredients, with the data, apps, and API all openly licensed."
+  },
+  {
+    "name": "Calflora",
+    "url": "https://www.calflora.org/",
+    "repo": null,
+    "kind": "Wildflowers",
+    "description": "Observation data on California's wild plants. Use it to track spring wildflower blooms in Anza-Borrego and Carrizo Plain."
+  },
+  {
+    "name": "Mealie",
+    "url": "https://mealie.io/",
+    "repo": "https://github.com/mealie-recipes/mealie",
+    "kind": "Self-hosted recipes",
+    "description": "A self-hosted recipe manager and meal planner. Import the recipes on this site and plan a week around the market."
+  }
+]

@@ -1,0 +1,304 @@
+[
+  {
+    "id": "citrus-fennel-salad",
+    "title": "Blood Orange, Fennel & Avocado Salad",
+    "season": "winter",
+    "produce": ["blood-orange", "fennel", "avocado", "arugula"],
+    "time": "15 min",
+    "serves": 4,
+    "ingredients": [
+      "3 blood oranges",
+      "1 fennel bulb, shaved thin",
+      "1 avocado, sliced",
+      "2 handfuls arugula",
+      "2 tbsp olive oil",
+      "Flaky salt, black pepper",
+      "A few oil-cured olives (optional)"
+    ],
+    "steps": [
+      "Slice the peel and pith off the oranges with a knife, then cut into rounds. Save the juice from the board.",
+      "Toss fennel and arugula with olive oil, the saved juice, and a pinch of salt.",
+      "Layer on a platter with orange rounds and avocado. Finish with flaky salt, pepper, olives, and the fennel fronds."
+    ]
+  },
+  {
+    "id": "roasted-winter-veg-tacos",
+    "title": "Charred Cauliflower Tacos with Cabbage-Lime Slaw",
+    "season": "winter",
+    "produce": ["broccoli", "cabbage", "cilantro", "radish"],
+    "time": "35 min",
+    "serves": 4,
+    "ingredients": [
+      "1 head cauliflower, cut into small florets",
+      "2 tbsp oil, 1 tsp each cumin and smoked paprika",
+      "2 cups thinly sliced cabbage",
+      "4 radishes, matchsticked",
+      "Juice of 2 limes, salt",
+      "Corn tortillas, cilantro, crema or salsa"
+    ],
+    "steps": [
+      "Toss cauliflower with oil, spices, and salt. Roast at 450°F for 25 minutes until charred at the edges.",
+      "Meanwhile, toss cabbage and radish with lime juice and a big pinch of salt. Let it sit and soften.",
+      "Warm tortillas on a dry pan. Fill with cauliflower, slaw, cilantro, and crema."
+    ]
+  },
+  {
+    "id": "meyer-lemon-kale-pasta",
+    "title": "Meyer Lemon & Kale Pasta",
+    "season": "winter",
+    "produce": ["meyer-lemon", "kale", "leek"],
+    "time": "25 min",
+    "serves": 4,
+    "ingredients": [
+      "1 lb pasta (orecchiette or rigatoni)",
+      "1 bunch kale or chard, stems removed, chopped",
+      "1 leek, sliced and rinsed",
+      "2 Meyer lemons, zest and juice",
+      "3 tbsp butter or olive oil",
+      "Parmesan, chili flakes, salt"
+    ],
+    "steps": [
+      "Boil pasta in well-salted water. Add the kale for the last 2 minutes.",
+      "Meanwhile, soften the leek in butter over medium-low heat, about 8 minutes.",
+      "Drain, saving 1 cup of pasta water. Toss everything with the leeks, lemon zest and juice, a splash of pasta water, and a lot of Parmesan."
+    ]
+  },
+  {
+    "id": "spring-pea-fava-toast",
+    "title": "Pea, Fava & Mint Smash on Toast",
+    "season": "spring",
+    "produce": ["peas", "fava", "mint", "green-garlic"],
+    "time": "25 min",
+    "serves": 4,
+    "ingredients": [
+      "1 cup shelled English peas",
+      "1 cup shelled fava beans",
+      "1 stalk green garlic, minced",
+      "Handful of mint leaves",
+      "Lemon, olive oil, salt",
+      "Ricotta and good bread"
+    ],
+    "steps": [
+      "Blanch the favas for 1 minute, shock them in ice water, and slip off the skins. Blanch the peas for 90 seconds.",
+      "Gently cook the green garlic in olive oil for 2 minutes. Add the peas and favas, then roughly mash with a fork, mint, lemon, and salt.",
+      "Toast the bread, spread with ricotta, pile on the smash, and finish with olive oil."
+    ]
+  },
+  {
+    "id": "grilled-artichokes",
+    "title": "Grilled Artichokes with Lemon Aioli",
+    "season": "spring",
+    "produce": ["artichoke", "meyer-lemon"],
+    "time": "45 min",
+    "serves": 4,
+    "ingredients": [
+      "4 artichokes",
+      "Olive oil, salt",
+      "1/2 cup mayo, 1 garlic clove grated, zest and juice of 1 lemon"
+    ],
+    "steps": [
+      "Trim the tops and stems, halve the artichokes, and scoop out the fuzzy chokes. Steam or boil for 15–20 minutes until a knife slides into the heart.",
+      "Brush with oil, season, and grill cut-side down over high heat until charred, about 5 minutes.",
+      "Stir together the aioli ingredients. Serve warm."
+    ]
+  },
+  {
+    "id": "nopales-salad",
+    "title": "Ensalada de Nopales",
+    "season": "spring",
+    "produce": ["nopales", "tomato", "cilantro"],
+    "time": "30 min",
+    "serves": 4,
+    "ingredients": [
+      "4 cleaned nopal paddles, diced",
+      "1/2 white onion, diced",
+      "1 jalapeño or serrano, minced",
+      "2 tomatoes (or a handful of cherry tomatoes), diced",
+      "Cilantro, lime, salt, crumbled queso fresco"
+    ],
+    "steps": [
+      "Simmer the diced nopales in salted water with a chunk of onion for 10–15 minutes until they turn olive green. Drain and rinse well to remove the slime.",
+      "Toss with onion, chile, tomato, cilantro, lime juice, and salt.",
+      "Top with queso fresco. Good on tostadas or as a side."
+    ]
+  },
+  {
+    "id": "strawberry-shortcake",
+    "title": "Oxnard Strawberry Shortcakes",
+    "season": "spring",
+    "produce": ["strawberry"],
+    "time": "40 min",
+    "serves": 6,
+    "ingredients": [
+      "2 baskets strawberries, sliced, plus 2 tbsp sugar",
+      "2 cups flour, 1 tbsp baking powder, 3 tbsp sugar, 1/2 tsp salt",
+      "6 tbsp cold butter, 3/4 cup cream (plus more for whipping)"
+    ],
+    "steps": [
+      "Toss the berries with sugar and let them sit for 30 minutes until syrupy.",
+      "Cut the butter into the dry ingredients, stir in the cream, pat into a 1-inch slab, and cut 6 rounds. Bake at 425°F for 15 minutes.",
+      "Split the biscuits and fill with berries and softly whipped cream."
+    ]
+  },
+  {
+    "id": "elote-salad",
+    "title": "Esquites (Street Corn Salad)",
+    "season": "summer",
+    "produce": ["corn", "pepper", "cilantro"],
+    "time": "20 min",
+    "serves": 4,
+    "ingredients": [
+      "4 ears of corn, kernels cut off",
+      "1 tbsp butter",
+      "1 jalapeño, minced",
+      "3 tbsp mayo or crema, juice of 1 lime",
+      "Cotija, chili powder or Tajín, cilantro"
+    ],
+    "steps": [
+      "Char the corn in butter in a hot cast-iron pan without stirring too often, about 6 minutes.",
+      "Stir in the jalapeño for 1 minute, then take it off the heat.",
+      "Toss with mayo, lime, cotija, chili powder, and cilantro. Serve warm in cups."
+    ]
+  },
+  {
+    "id": "heirloom-tomato-peach-salad",
+    "title": "Heirloom Tomato & Peach Salad",
+    "season": "summer",
+    "produce": ["tomato", "peach", "basil"],
+    "time": "10 min",
+    "serves": 4,
+    "ingredients": [
+      "3 ripe heirloom tomatoes, cut into wedges",
+      "2 peaches or nectarines, sliced",
+      "Handful of basil leaves",
+      "Burrata (optional)",
+      "Olive oil, sherry vinegar, flaky salt"
+    ],
+    "steps": [
+      "Salt the tomatoes and let them sit for 5 minutes.",
+      "Arrange with the peaches and burrata. Drizzle with oil and a splash of vinegar.",
+      "Tear the basil over the top and finish with pepper. Eat immediately."
+    ]
+  },
+  {
+    "id": "campfire-stone-fruit",
+    "title": "Campfire Stone Fruit Foil Packs",
+    "season": "summer",
+    "produce": ["peach", "plum", "blackberry"],
+    "time": "20 min",
+    "serves": 4,
+    "camp": true,
+    "ingredients": [
+      "4 peaches, plums, or pluots, halved and pitted",
+      "1 cup blackberries",
+      "2 tbsp butter, 2 tbsp brown sugar, pinch of cinnamon",
+      "Heavy-duty foil"
+    ],
+    "steps": [
+      "Divide the fruit among 4 foil squares. Top each with butter, brown sugar, and cinnamon.",
+      "Seal tightly and set on hot coals or a grill grate for 10–12 minutes.",
+      "Open carefully because of the steam. Great with graham crackers or vanilla yogurt."
+    ]
+  },
+  {
+    "id": "zucchini-blossom-quesadillas",
+    "title": "Squash Blossom Quesadillas",
+    "season": "summer",
+    "produce": ["squash-blossom", "zucchini", "pepper"],
+    "time": "20 min",
+    "serves": 4,
+    "camp": true,
+    "ingredients": [
+      "12 squash blossoms, stems and pistils removed",
+      "1 small zucchini, diced",
+      "1 poblano, roasted and sliced (optional)",
+      "Oaxaca cheese, shredded",
+      "Corn or flour tortillas, salsa"
+    ],
+    "steps": [
+      "Sauté the zucchini and poblano for 3 minutes. Add the blossoms for 30 seconds until they wilt.",
+      "Fill the tortillas with cheese and the vegetables, then fold.",
+      "Cook on a griddle or camp stove until crisp and melty. Serve with salsa."
+    ]
+  },
+  {
+    "id": "apple-cider-dutch-baby",
+    "title": "Oak Glen Apple Dutch Baby",
+    "season": "fall",
+    "produce": ["apple"],
+    "time": "30 min",
+    "serves": 4,
+    "ingredients": [
+      "2 apples, thinly sliced",
+      "3 tbsp butter, 2 tbsp brown sugar, cinnamon",
+      "3 eggs, 2/3 cup milk, 2/3 cup flour, pinch of salt"
+    ],
+    "steps": [
+      "Heat the oven to 425°F with a 10-inch cast-iron skillet inside.",
+      "Blend the eggs, milk, flour, and salt. Melt the butter in the hot skillet and cook the apples with sugar and cinnamon for 3 minutes.",
+      "Pour the batter over the apples and bake for 18–20 minutes until puffed and golden. Dust with powdered sugar."
+    ]
+  },
+  {
+    "id": "persimmon-pomegranate-salad",
+    "title": "Fuyu Persimmon & Pomegranate Salad",
+    "season": "fall",
+    "produce": ["persimmon", "pomegranate", "arugula"],
+    "time": "15 min",
+    "serves": 4,
+    "ingredients": [
+      "2 Fuyu persimmons, sliced thin",
+      "Seeds of 1/2 pomegranate",
+      "3 handfuls arugula or bitter greens",
+      "1/4 cup toasted pecans",
+      "Olive oil, balsamic, salt"
+    ],
+    "steps": [
+      "Toss the greens lightly with oil, vinegar, and salt.",
+      "Layer with the persimmon, pomegranate seeds, and pecans.",
+      "Add shaved Parmesan or crumbled goat cheese if you like."
+    ]
+  },
+  {
+    "id": "kabocha-coconut-soup",
+    "title": "Kabocha Coconut Curry Soup",
+    "season": "fall",
+    "produce": ["winter-squash", "sweet-potato", "cilantro"],
+    "time": "45 min",
+    "serves": 6,
+    "ingredients": [
+      "1 kabocha squash, peeled and cubed",
+      "1 sweet potato, cubed",
+      "1 onion, 3 garlic cloves, 1 thumb of ginger",
+      "2 tbsp red curry paste",
+      "1 can coconut milk, 3 cups stock",
+      "Lime, cilantro, salt"
+    ],
+    "steps": [
+      "Soften the onion, garlic, and ginger in oil. Stir in the curry paste for 1 minute.",
+      "Add the squash, sweet potato, coconut milk, and stock. Simmer for 25 minutes until tender.",
+      "Blend until smooth. Season with lime and salt, and top with cilantro."
+    ]
+  },
+  {
+    "id": "camp-chili-verde",
+    "title": "One-Pot Camp Chile Verde Beans",
+    "season": "fall",
+    "produce": ["pepper", "tomato", "cilantro"],
+    "time": "40 min",
+    "serves": 4,
+    "camp": true,
+    "ingredients": [
+      "4 green chiles (Anaheim or Hatch-style), charred and chopped",
+      "1 lb tomatillos or green tomatoes, chopped",
+      "1 onion, 2 garlic cloves",
+      "2 cans pinto or white beans",
+      "Cumin, oregano, salt, cilantro, tortillas"
+    ],
+    "steps": [
+      "Char the chiles over the campfire or burner. Peel and chop them.",
+      "In a Dutch oven, soften the onion and garlic, then add the tomatillos and simmer for 10 minutes.",
+      "Add the beans, chiles, and spices. Simmer for 15 minutes and serve with cilantro and warm tortillas."
+    ]
+  }
+]

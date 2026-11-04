@@ -1,0 +1,36 @@
+name: ⛺ Suggest a campsite
+description: A great place to camp within a day's drive of LA
+title: "[Campsite] "
+labels: [data, camping]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Campground name & park
+      placeholder: e.g. Hole-in-the-Wall, Mojave National Preserve
+    validations:
+      required: true
+  - type: checkboxes
+    id: seasons
+    attributes:
+      label: Best seasons
+      options:
+        - label: Winter
+        - label: Spring
+        - label: Summer
+        - label: Fall
+  - type: input
+    id: drive
+    attributes:
+      label: Rough drive time from downtown LA
+      placeholder: e.g. 3h 30m
+  - type: input
+    id: url
+    attributes:
+      label: Official page or reservation link
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it's great, plus any tips
+    validations:
+      required: true

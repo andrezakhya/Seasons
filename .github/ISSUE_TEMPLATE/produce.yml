@@ -1,0 +1,28 @@
+name: 🍓 Produce correction or addition
+description: A month is wrong, or something's missing from the market
+title: "[Produce] "
+labels: [data, produce]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: Produce
+      placeholder: e.g. Pixie tangerines
+    validations:
+      required: true
+  - type: input
+    id: months
+    attributes:
+      label: Months in season (in LA markets)
+      placeholder: e.g. March–May, peak April
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: How do you know?
+      description: A farmer told you, a market report, your own backyard tree… all welcome.
+  - type: textarea
+    id: tip
+    attributes:
+      label: A tip for picking, storing, or cooking it (optional)
