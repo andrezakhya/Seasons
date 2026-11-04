@@ -1,0 +1,45 @@
+name: 🍳 Share a recipe
+description: A simple, seasonal recipe built around LA produce
+title: "[Recipe] "
+labels: [data, recipe]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Recipe name
+    validations:
+      required: true
+  - type: dropdown
+    id: season
+    attributes:
+      label: Season
+      options: [Winter, Spring, Summer, Fall]
+    validations:
+      required: true
+  - type: checkboxes
+    id: camp
+    attributes:
+      label: Camp-friendly?
+      options:
+        - label: Works on a camp stove or campfire
+  - type: textarea
+    id: ingredients
+    attributes:
+      label: Ingredients
+      placeholder: One per line
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      placeholder: Keep it to 3–5 short steps if you can
+    validations:
+      required: true
+  - type: checkboxes
+    id: original
+    attributes:
+      label: Rights
+      options:
+        - label: This is my own recipe (or a family one) and I'm OK sharing it under CC BY-SA 4.0
+          required: true

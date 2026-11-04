@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Contributing guide
+    url: https://github.com/andrezakhya/Seasons/blob/main/CONTRIBUTING.md
+    about: Want to edit the JSON directly? Start here.

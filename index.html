@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seasons LA</title>
+  <meta name="description" content="What's in season in Los Angeles, month by month: farmers-market produce, recipes to cook it, and places to camp in winter, spring, summer, and fall. Open source on GitHub." />
+  <meta name="theme-color" content="#f6f1e7" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-season="fall">
+  <a class="skip" href="#produce">Skip to produce</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="Seasons LA home">
+        <span class="brand-mark" aria-hidden="true">🍊</span>
+        <span class="brand-name">Seasons<span class="brand-la">LA</span></span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#produce">Produce</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#camping">Camping</a>
+        <a href="#open-source">Open source</a>
+      </nav>
+      <a class="gh-button" id="gh-button" href="https://github.com/andrezakhya/Seasons" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>GitHub</span>
+        <span class="gh-stars" id="gh-stars" hidden></span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow"><span id="season-emoji">🍂</span> <span id="season-name">Fall</span> in Los Angeles</p>
+        <div class="hero-row">
+          <button class="month-step" id="prev-month" aria-label="Previous month">‹</button>
+          <h1 id="month-title">November</h1>
+          <button class="month-step" id="next-month" aria-label="Next month">›</button>
+        </div>
+        <p class="hero-sub" id="hero-sub">Loading what's at the market…</p>
+        <div class="month-picker" role="tablist" aria-label="Choose a month" id="month-picker"></div>
+      </div>
+    </section>
+
+    <section id="produce" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>In season this month</h2>
+            <p class="muted">What SoCal farms are bringing to LA farmers markets. <span class="legend"><span class="badge badge-peak">Peak</span> at its best <span class="badge badge-new">New</span> just arrived <span class="badge badge-last">Last call</span> leaving soon</span></p>
+          </div>
+          <div class="controls">
+            <div class="segmented" role="group" aria-label="Filter by type" id="type-filter">
+              <button data-type="all" aria-pressed="true">All</button>
+              <button data-type="fruit" aria-pressed="false">Fruit</button>
+              <button data-type="vegetable" aria-pressed="false">Veg</button>
+              <button data-type="herb" aria-pressed="false">Herbs</button>
+            </div>
+            <label class="toggle"><input type="checkbox" id="peak-only" /> Peak only</label>
+          </div>
+        </div>
+        <div class="produce-grid" id="produce-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="calendar" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Year at a glance</h2>
+            <p class="muted">Every crop, every month. Light cells mean available, dark cells mean peak.</p>
+          </div>
+          <div class="controls">
+            <input type="search" id="calendar-search" class="search" placeholder="Search produce…" aria-label="Search produce" />
+          </div>
+        </div>
+        <div class="calendar-scroll">
+          <table class="calendar" id="calendar-table"></table>
+        </div>
+      </div>
+    </section>
+
+    <section id="recipes" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Cook the season</h2>
+            <p class="muted">Simple recipes built around what's in season. Ingredients that are in season this month are highlighted.</p>
+          </div>
+          <div class="controls">
+            <div class="segmented season-tabs" role="group" aria-label="Recipe season" id="recipe-season"></div>
+            <label class="toggle"><input type="checkbox" id="camp-only" /> 🔥 Camp-friendly</label>
+          </div>
+        </div>
+        <div class="recipe-grid" id="recipe-grid"></div>
+      </div>
+    </section>
+
+    <section id="camping" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Camp the season</h2>
+            <p class="muted">Where to sleep outside within a day's drive of LA. Drive times are rough estimates from downtown LA without traffic.</p>
+          </div>
+          <div class="controls">
+            <div class="segmented season-tabs" role="group" aria-label="Camping season" id="camp-season"></div>
+          </div>
+        </div>
+        <div class="camp-grid" id="camp-grid"></div>
+        <p class="fineprint">⚠️ Conditions change: fires, storms, and road closures happen. Always check the official site for current status, fire restrictions, and reservations before you go.</p>
+      </div>
+    </section>
+
+    <section id="open-source" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Open source, made by Angelenos</h2>
+            <p class="muted">All of this site's data is plain JSON on GitHub. Spot a wrong month? Know a great campsite? Have a recipe from your abuela? Open a pull request.</p>
+          </div>
+        </div>
+
+        <div class="os-layout">
+          <div class="card os-card">
+            <h3>Contribute</h3>
+            <ul class="contrib-list">
+              <li><a id="edit-produce" target="_blank" rel="noopener">✏️ Edit <code>data/produce.json</code></a></li>
+              <li><a id="edit-recipes" target="_blank" rel="noopener">✏️ Edit <code>data/recipes.json</code></a></li>
+              <li><a id="edit-camps" target="_blank" rel="noopener">✏️ Edit <code>data/campsites.json</code></a></li>
+              <li><a id="issue-new" target="_blank" rel="noopener">💡 Suggest something (no code needed)</a></li>
+              <li><a id="fork-link" target="_blank" rel="noopener">🍴 Fork it for your own city</a></li>
+            </ul>
+            <div class="gh-stats" id="gh-stats" hidden>
+              <div><strong id="stat-stars">–</strong><span>stars</span></div>
+              <div><strong id="stat-forks">–</strong><span>forks</span></div>
+              <div><strong id="stat-issues">–</strong><span>open issues</span></div>
+            </div>
+          </div>
+
+          <div class="card os-card">
+            <h3>Contributors</h3>
+            <div class="avatars" id="contributors"><p class="muted small">Loading from GitHub…</p></div>
+            <h3 class="mt">Recent changes</h3>
+            <ol class="commits" id="commits"><li class="muted small">Loading from GitHub…</li></ol>
+          </div>
+        </div>
+
+        <h3 class="resources-title">Open-source projects for LA eaters &amp; campers</h3>
+        <div class="resource-grid" id="resource-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Seasons LA is a community project. Code is <a href="LICENSE">MIT licensed</a>; data is <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+      <p class="muted small">Seasonality varies with weather and growers. Treat months as a guide and ask your farmer.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
