@@ -1,6 +1,6 @@
 # Contributing to Seasons LA
 
-Thanks for helping! Almost everything on the site comes from four JSON files in [`data/`](data/), so most contributions are a few lines of JSON.
+Thanks for helping! Almost everything on the site comes from the JSON files in [`data/`](data/), so most contributions are a few lines of JSON.
 
 ## No-code route
 
@@ -64,6 +64,29 @@ Please only submit recipes you wrote yourself or that come from your family. Don
   "url": "https://…"             // official page (https only)
 }
 ```
+
+### `data/movies.json`
+
+```json
+{
+  "id": "chinatown",
+  "title": "Chinatown",
+  "year": 1974,
+  "director": "Roman Polanski",
+  "runtime": 130,                // minutes
+  "country": "USA",              // anything other than "USA" counts as world cinema
+  "genres": ["crime", "thriller"],  // drama crime comedy thriller horror romance scifi fantasy adventure war musical animation family
+  "why": "One or two spoiler-free sentences on why it's essential (max 220 chars).",
+  "la": "Set in LA",             // optional: "Set in LA", "Filmed in Pasadena"…
+  "season": "summer"             // optional: puts it on that season's watchlist
+}
+```
+
+The bar is **"must watch once in your life"**: films that have lasted, not just new hits. Make the case in your PR.
+
+### `data/theaters.json`
+
+LA theaters that regularly show classic or repertory films: `name`, `area`, `description`, `url`, plus an optional `season` for seasonal series (like outdoor summer screenings).
 
 ### `data/resources.json`
 

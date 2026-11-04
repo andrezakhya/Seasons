@@ -98,6 +98,30 @@ res.data.forEach((r, i) => {
   if (r.repo !== null && r.repo !== undefined && !isUrl(r.repo)) fail(res.file, `${w}: repo must be an https:// URL or null`);
 });
 
+// movies
+const movies = load("movies");
+uniqueIds(movies.file, movies.data);
+const GENRES = ["drama", "crime", "comedy", "thriller", "horror", "romance", "scifi", "fantasy", "adventure", "war", "musical", "animation", "family"];
+movies.data.forEach((m, i) => {
+  const w = `[${i}] ${m.id}`;
+  ["title", "director", "country", "why"].forEach((k) => { if (!isStr(m[k])) fail(movies.file, `${w}: missing ${k}`); });
+  if (!Number.isInteger(m.year) || m.year < 1888 || m.year > new Date().getFullYear()) fail(movies.file, `${w}: year looks wrong`);
+  if (!Number.isInteger(m.runtime) || m.runtime < 1 || m.runtime > 600) fail(movies.file, `${w}: runtime must be minutes`);
+  if (!Array.isArray(m.genres) || !m.genres.length || !m.genres.every((g) => GENRES.includes(g))) fail(movies.file, `${w}: genres must be from ${GENRES.join(", ")}`);
+  if ("la" in m && !isStr(m.la)) fail(movies.file, `${w}: la must be a short note like "Set in LA"`);
+  if ("season" in m && !SEASONS.includes(m.season)) fail(movies.file, `${w}: season must be one of ${SEASONS.join(", ")}`);
+  if (m.why && m.why.length > 220) fail(movies.file, `${w}: keep "why" under 220 characters`);
+});
+
+// theaters
+const theaters = load("theaters");
+theaters.data.forEach((t, i) => {
+  const w = `[${i}] ${t.name}`;
+  ["name", "area", "description"].forEach((k) => { if (!isStr(t[k])) fail(theaters.file, `${w}: missing ${k}`); });
+  if (!isUrl(t.url)) fail(theaters.file, `${w}: url must start with https://`);
+  if ("season" in t && !SEASONS.includes(t.season)) fail(theaters.file, `${w}: season must be one of ${SEASONS.join(", ")}`);
+});
+
 // Every month should have something in season
 for (let m = 1; m <= 12; m++) {
   if (!produce.data.some((p) => p.months?.includes(m))) fail(produce.file, `no produce listed for month ${m}`);
@@ -111,4 +135,4 @@ if (errors.length) {
   errors.forEach((e) => console.error("  • " + e));
   process.exit(1);
 }
-console.log(`✓ Data looks good: ${produce.data.length} produce, ${recipes.data.length} recipes, ${camps.data.length} campsites, ${res.data.length} resources.`);
+console.log(`✓ Data looks good: ${produce.data.length} produce, ${recipes.data.length} recipes, ${camps.data.length} campsites, ${movies.data.length} movies, ${theaters.data.length} theaters, ${res.data.length} resources.`);
