@@ -1,0 +1,33 @@
+[
+  {
+    "name": "New Beverly Cinema",
+    "area": "Beverly Grove",
+    "description": "A tiny repertory house that shows classics and cult double features, mostly on 35mm film.",
+    "url": "https://thenewbev.com/"
+  },
+  {
+    "name": "American Cinematheque",
+    "area": "Hollywood · Los Feliz · Santa Monica",
+    "description": "Retrospectives, restorations, and filmmaker Q&As at the Egyptian, the Los Feliz 3, and the Aero.",
+    "url": "https://www.americancinematheque.com/"
+  },
+  {
+    "name": "Academy Museum of Motion Pictures",
+    "area": "Miracle Mile",
+    "description": "Film series in the David Geffen Theater, plus galleries with the real ruby slippers and the Jaws shark.",
+    "url": "https://www.academymuseum.org/"
+  },
+  {
+    "name": "Vidiots",
+    "area": "Eagle Rock",
+    "description": "A nonprofit cinema and video store with a deep rental library, classic screenings, and a great bar.",
+    "url": "https://vidiotsfoundation.org/"
+  },
+  {
+    "name": "Cinespia",
+    "area": "Hollywood Forever Cemetery",
+    "description": "Outdoor screenings on the lawn in summer. Bring a blanket and a picnic and arrive early.",
+    "url": "https://cinespia.org/",
+    "season": "summer"
+  }
+]

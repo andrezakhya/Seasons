@@ -30,9 +30,17 @@ const state = {
   campOnly: false,
   campSeason: null,
   search: "",
+  tab: "food",
+  sub: "produce",
+  genre: "all",
+  worldOnly: false,
+  laOnly: false,
+  hideWatched: false,
+  movieSort: "year",
+  picked: null,
 };
 
-let produce = [], recipes = [], camps = [], resources = [];
+let produce = [], recipes = [], camps = [], resources = [], movies = [], theaters = [];
 let produceById = new Map();
 
 /* ---------- URL state ---------- */
@@ -283,6 +291,133 @@ function timeAgo(d) {
   return "just now";
 }
 
+/* ---------- Movies ---------- */
+const GENRE_LABEL = {
+  drama: "Drama", crime: "Crime", comedy: "Comedy", thriller: "Thriller", horror: "Horror", romance: "Romance",
+  scifi: "Sci-fi", fantasy: "Fantasy", adventure: "Adventure", war: "War", musical: "Musical", animation: "Animation", family: "Family",
+};
+const WATCHED_KEY = "seasons-la:watched";
+let watched = new Set();
+try { watched = new Set(JSON.parse(localStorage.getItem(WATCHED_KEY) || "[]")); } catch {}
+function saveWatched() {
+  try { localStorage.setItem(WATCHED_KEY, JSON.stringify([...watched])); } catch {}
+}
+const fmtRuntime = (min) => `${Math.floor(min / 60)}h ${String(min % 60).padStart(2, "0")}m`;
+
+function filteredMovies() {
+  let list = movies.slice();
+  if (state.genre !== "all") list = list.filter((m) => m.genres.includes(state.genre));
+  if (state.worldOnly) list = list.filter((m) => m.country !== "USA");
+  if (state.laOnly) list = list.filter((m) => m.la);
+  if (state.hideWatched) list = list.filter((m) => !watched.has(m.id) || m.id === state.picked);
+  const key = state.movieSort.replace("-", ""), dir = state.movieSort.startsWith("-") ? -1 : 1;
+  list.sort((a, b) => (key === "title" ? a.title.localeCompare(b.title) : (a[key] - b[key]) * dir) || a.year - b.year);
+  return list;
+}
+
+function renderMovies() {
+  // Progress
+  const seen = movies.filter((m) => watched.has(m.id)).length;
+  const pct = movies.length ? Math.round((seen / movies.length) * 100) : 0;
+  $("#movie-progress").innerHTML = `<div class="small muted">Your progress</div>
+    <div><strong>${seen}</strong> <span class="muted">of ${movies.length} watched</span></div>
+    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${movies.length}" aria-valuenow="${seen}"><span style="width:${pct}%"></span></div>`;
+
+  // Seasonal picks for the current season
+  const season = seasonOf(state.month);
+  const picks = movies.filter((m) => m.season === season);
+  $("#season-picks").innerHTML = picks.length
+    ? `<strong>${SEASONS[season].emoji} ${SEASONS[season].name} watchlist:</strong>` +
+      picks.map((m) => `<button type="button" data-movie="${esc(m.id)}">${esc(m.title)}${watched.has(m.id) ? " ✓" : ""}</button>`).join("")
+    : "";
+  $("#season-picks").hidden = !picks.length;
+
+  // Genre chips (most common first)
+  const counts = {};
+  movies.forEach((m) => m.genres.forEach((g) => (counts[g] = (counts[g] || 0) + 1)));
+  const genres = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  $("#genre-filter").innerHTML = [["all", "All"], ...genres.map((g) => [g, GENRE_LABEL[g] || g])]
+    .map(([g, label]) => `<button type="button" data-genre="${esc(g)}" aria-pressed="${state.genre === g}">${esc(label)}</button>`).join("");
+
+  const list = filteredMovies();
+  $("#movie-grid").innerHTML = list.length ? list.map((m) => {
+    const isW = watched.has(m.id);
+    const q = encodeURIComponent(m.title);
+    return `<article class="card movie-card ${isW ? "is-watched" : ""} ${state.picked === m.id ? "is-picked" : ""}" id="movie-${esc(m.id)}" tabindex="-1">
+      <div class="movie-head"><h3>${esc(m.title)}</h3><span class="movie-year">${esc(m.year)}</span></div>
+      <div class="meta">${esc(m.director)} · ${esc(fmtRuntime(m.runtime))} · ${esc(m.country)}</div>
+      <div class="produce-badges">
+        ${m.genres.map((g) => `<span class="badge badge-soft">${esc(GENRE_LABEL[g] || g)}</span>`).join("")}
+        ${m.la ? `<span class="badge badge-la">🌴 ${esc(m.la)}</span>` : ""}
+        ${m.season === season ? `<span class="badge badge-peak">${SEASONS[season].emoji} ${SEASONS[season].name} pick</span>` : ""}
+      </div>
+      <p>${esc(m.why)}</p>
+      <div class="movie-actions">
+        <button type="button" class="watch-btn" data-watch="${esc(m.id)}" aria-pressed="${isW}">${isW ? "✓ Watched" : "＋ Mark watched"}</button>
+        <a href="https://www.justwatch.com/us/search?q=${q}" target="_blank" rel="noopener">Where to stream ↗</a>
+        <a href="https://letterboxd.com/search/films/${q}/" target="_blank" rel="noopener">Letterboxd ↗</a>
+      </div>
+    </article>`;
+  }).join("") : `<div class="empty">No movies match those filters.</div>`;
+}
+
+function renderTheaters() {
+  const season = seasonOf(state.month);
+  $("#theater-grid").innerHTML = theaters.map((t) => `
+    <article class="card resource-card">
+      <span class="badge badge-soft" style="align-self:flex-start">📍 ${esc(t.area)}</span>
+      <h3>${esc(t.name)}</h3>
+      <p>${esc(t.description)}</p>
+      ${t.season ? `<span class="badge ${t.season === season ? "badge-peak" : "badge-soft"}" style="align-self:flex-start">${SEASONS[t.season].emoji} ${SEASONS[t.season].name} only</span>` : ""}
+      <div class="links"><a href="${esc(safeUrl(t.url))}" target="_blank" rel="noopener">What's playing ↗</a></div>
+    </article>`).join("");
+}
+
+function pickMovie() {
+  const pool = filteredMovies().filter((m) => !watched.has(m.id));
+  const choices = pool.length ? pool : filteredMovies();
+  if (!choices.length) return;
+  const others = choices.filter((m) => m.id !== state.picked);
+  const m = (others.length ? others : choices)[Math.floor(Math.random() * (others.length || choices.length))];
+  state.picked = m.id;
+  renderMovies();
+  const card = document.getElementById(`movie-${m.id}`);
+  card?.scrollIntoView({ block: "center" });
+  card?.focus({ preventScroll: true });
+}
+function showMovie(id) {
+  // Make sure the card is visible under the current filters, then highlight it
+  state.genre = "all"; state.worldOnly = false; state.laOnly = false;
+  $("#world-only").checked = false; $("#la-only").checked = false;
+  state.picked = id;
+  renderMovies();
+  document.getElementById(`movie-${id}`)?.scrollIntoView({ block: "center" });
+}
+
+/* ---------- Tabs (hash routing) ---------- */
+const TABS = ["food", "camping", "movies", "open-source"];
+const SUBS = ["produce", "calendar", "recipes"];
+const LEGACY = { produce: ["food", "produce"], calendar: ["food", "calendar"], recipes: ["food", "recipes"] };
+
+function readHash() {
+  const [a, b] = location.hash.replace(/^#\/?/, "").split("/");
+  if (LEGACY[a]) [state.tab, state.sub] = LEGACY[a];
+  else if (TABS.includes(a)) { state.tab = a; state.sub = a === "food" && SUBS.includes(b) ? b : "produce"; }
+  else if (!a) { state.tab = "food"; state.sub = "produce"; }
+}
+function showTab({ scroll = true } = {}) {
+  document.querySelectorAll("[data-tabs]").forEach((el) => {
+    const inTab = el.dataset.tabs.split(" ").includes(state.tab);
+    el.hidden = !inTab || (el.dataset.sub && el.dataset.sub !== state.sub);
+  });
+  const mark = (a, on) => (on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  document.querySelectorAll("#main-tabs a").forEach((a) => mark(a, a.dataset.tab === state.tab));
+  document.querySelectorAll("#food-subtabs a").forEach((a) => mark(a, a.dataset.sub === state.sub));
+  const title = { food: "Food", camping: "Camping", movies: "Movies", "open-source": "Open source" }[state.tab];
+  document.title = `${title} · Seasons LA`;
+  if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+}
+
 /* ---------- Wiring ---------- */
 function renderAll() {
   renderHero();
@@ -290,6 +425,8 @@ function renderAll() {
   renderCalendar();
   renderRecipes();
   renderCamps();
+  renderMovies();
+  renderTheaters();
 }
 function setMonth(m) {
   state.month = m;
@@ -300,6 +437,7 @@ function setMonth(m) {
 }
 
 function bind() {
+  window.addEventListener("hashchange", () => { readHash(); showTab(); });
   $("#prev-month").addEventListener("click", () => setMonth(prevM(state.month)));
   $("#next-month").addEventListener("click", () => setMonth(nextM(state.month)));
   $("#month-picker").addEventListener("click", (e) => {
@@ -311,7 +449,7 @@ function bind() {
     if (th) setMonth(+th.dataset.month);
   });
   document.addEventListener("keydown", (e) => {
-    if (e.target.matches("input, textarea")) return;
+    if (e.target.matches("input, textarea, select") || !["food", "camping"].includes(state.tab)) return;
     if (e.key === "ArrowLeft") setMonth(prevM(state.month));
     if (e.key === "ArrowRight") setMonth(nextM(state.month));
   });
@@ -333,7 +471,7 @@ function bind() {
     const b = e.target.closest("button[data-season]");
     if (b) { state.campSeason = b.dataset.season; renderCamps(); }
   });
-  // Clicking a recipe link on a produce card switches to that recipe's season and opens it
+  // Clicking a recipe link on a produce card jumps to the Recipes view and opens it
   $("#produce-grid").addEventListener("click", (e) => {
     const a = e.target.closest("a[data-recipe]");
     if (!a) return;
@@ -344,19 +482,48 @@ function bind() {
     state.campOnly = false;
     $("#camp-only").checked = false;
     renderRecipes();
+    history.pushState(null, "", "#food/recipes");
+    state.tab = "food"; state.sub = "recipes";
+    showTab({ scroll: false });
     const card = document.getElementById(`recipe-${r.id}`);
     card.querySelector("details").open = true;
     card.scrollIntoView({ block: "center" });
-    card.focus?.();
+  });
+
+  // Movies
+  $("#genre-filter").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-genre]");
+    if (b) { state.genre = b.dataset.genre; renderMovies(); }
+  });
+  $("#world-only").addEventListener("change", (e) => { state.worldOnly = e.target.checked; renderMovies(); });
+  $("#la-only").addEventListener("change", (e) => { state.laOnly = e.target.checked; renderMovies(); });
+  $("#hide-watched").addEventListener("change", (e) => { state.hideWatched = e.target.checked; renderMovies(); });
+  $("#movie-sort").addEventListener("change", (e) => { state.movieSort = e.target.value; renderMovies(); });
+  $("#pick-movie").addEventListener("click", pickMovie);
+  $("#season-picks").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-movie]");
+    if (b) showMovie(b.dataset.movie);
+  });
+  $("#movie-grid").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-watch]");
+    if (!b) return;
+    const id = b.dataset.watch;
+    watched.has(id) ? watched.delete(id) : watched.add(id);
+    saveWatched();
+    renderMovies();
+    document.querySelector(`button[data-watch="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
   });
 }
 
 async function init() {
   readUrl();
+  readHash();
+  showTab({ scroll: false });
   bind();
   try {
     const load = (f) => fetch(`data/${f}.json`).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
-    [produce, recipes, camps, resources] = await Promise.all(["produce", "recipes", "campsites", "resources"].map(load));
+    [produce, recipes, camps, resources, movies, theaters] = await Promise.all(
+      ["produce", "recipes", "campsites", "resources", "movies", "theaters"].map(load));
   } catch (err) {
     $("#hero-sub").textContent = "Couldn't load the data. If you opened index.html directly, serve the folder instead (e.g. `python3 -m http.server`).";
     console.error(err);
