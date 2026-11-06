@@ -64,7 +64,7 @@
         <div class="section-head">
           <div>
             <h2>In season this month</h2>
-            <p class="muted">What SoCal farms are bringing to LA farmers markets. <span class="legend"><span class="badge badge-peak">Peak</span> at its best <span class="badge badge-new">New</span> just arrived <span class="badge badge-last">Last call</span> leaving soon</span></p>
+            <p class="muted"><span class="phone-hide">What SoCal farms are bringing to LA farmers markets. </span><span class="legend"><span class="badge badge-peak">Peak</span> at its best <span class="badge badge-new">New</span> just arrived <span class="badge badge-last">Last call</span> leaving soon</span></p>
           </div>
           <div class="controls">
             <div class="segmented" role="group" aria-label="Filter by type" id="type-filter">
@@ -102,14 +102,14 @@
         <div class="section-head">
           <div>
             <h2>Cook the season</h2>
-            <p class="muted">Simple recipes built around what's in season. Ingredients that are in season this month are highlighted.</p>
+            <p class="muted phone-hide">Simple recipes built around what's in season. Ingredients that are in season this month are highlighted.</p>
           </div>
           <div class="controls">
             <div class="segmented season-tabs" role="group" aria-label="Recipe season" id="recipe-season"></div>
             <label class="toggle"><input type="checkbox" id="camp-only" /> 🔥 Camp-friendly</label>
           </div>
         </div>
-        <div class="recipe-grid" id="recipe-grid"></div>
+        <div class="swipe recipe-grid" id="recipe-grid"></div>
       </div>
     </section>
 
@@ -118,13 +118,13 @@
         <div class="section-head">
           <div>
             <h2>Camp the season</h2>
-            <p class="muted">Where to sleep outside within a day's drive of LA. Drive times are rough estimates from downtown LA without traffic.</p>
+            <p class="muted">Where to sleep outside within a day's drive of LA.<span class="phone-hide"> Drive times are rough estimates from downtown LA without traffic.</span></p>
           </div>
           <div class="controls">
             <div class="segmented season-tabs" role="group" aria-label="Camping season" id="camp-season"></div>
           </div>
         </div>
-        <div class="camp-grid" id="camp-grid"></div>
+        <div class="swipe camp-grid" id="camp-grid"></div>
         <p class="fineprint">⚠️ Conditions change: fires, storms, and road closures happen. Always check the official site for current status, fire restrictions, and reservations before you go.</p>
       </div>
     </section>
@@ -135,7 +135,7 @@
           <div>
             <p class="eyebrow">🎬 Must-see movies</p>
             <h2>Watch these once in your life</h2>
-            <p class="muted">Not this week's releases. These are the classics that are worth your time, from silver-screen Hollywood to world cinema. Check them off as you go.</p>
+            <p class="muted phone-hide">Not this week's releases. These are the classics that are worth your time, from silver-screen Hollywood to world cinema. Check them off as you go.</p>
           </div>
           <div class="progress-card card" id="movie-progress" aria-live="polite"></div>
         </div>
@@ -158,10 +158,10 @@
           </div>
         </div>
 
-        <div class="movie-grid" id="movie-grid" aria-live="polite"></div>
+        <div class="swipe movie-grid" id="movie-grid" aria-live="polite"></div>
 
         <h3 class="resources-title">See them on a big screen in LA</h3>
-        <div class="resource-grid" id="theater-grid"></div>
+        <div class="swipe resource-grid" id="theater-grid"></div>
       </div>
     </section>
 
@@ -170,7 +170,7 @@
         <div class="section-head">
           <div>
             <h2>Open source, made by Angelenos</h2>
-            <p class="muted">All of this site's data is plain JSON on GitHub. Spot a wrong month? Know a great campsite? Have a recipe from your abuela? Open a pull request.</p>
+            <p class="muted">All of this site's data is plain JSON on GitHub.<span class="phone-hide"> Spot a wrong month? Know a great campsite? Have a recipe from your abuela? Open a pull request.</span></p>
           </div>
         </div>
 
@@ -200,7 +200,7 @@
         </div>
 
         <h3 class="resources-title">Open-source projects for LA eaters &amp; campers</h3>
-        <div class="resource-grid" id="resource-grid"></div>
+        <div class="swipe resource-grid" id="resource-grid"></div>
       </div>
     </section>
   </main>

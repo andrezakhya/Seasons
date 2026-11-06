@@ -207,7 +207,11 @@ button { font: inherit; color: inherit; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
 
 /* Produce */
-.produce-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.produce-grid { display: block; }
+.produce-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.shelf + .shelf { margin-top: 26px; }
+.shelf-title { font-size: 1.15rem; margin: 0 0 10px; }
+.shelf-title .muted { font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; }
 .produce-card { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
 .produce-top { display: flex; gap: 12px; align-items: center; }
 .produce-emoji { font-size: 2rem; width: 48px; height: 48px; display: grid; place-items: center; background: var(--accent-soft); border-radius: 12px; flex: none; }
@@ -329,3 +333,76 @@ button { font: inherit; color: inherit; }
 /* Footer */
 .site-footer { border-top: 1px solid var(--border); padding: 28px 0 40px; }
 .footer-inner p { margin: 4px 0; }
+
+/* ---------- Phones: swipe rows instead of long grids ---------- */
+.swipe { position: relative; }
+.swipe-bar { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.swipe-bar[hidden] { display: none; }
+.swipe-count { font-size: 0.82rem; color: var(--muted); min-width: 48px; font-variant-numeric: tabular-nums; }
+.swipe-track { flex: 1; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.swipe-track span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width 0.2s; }
+.swipe-btn {
+  width: 36px; height: 36px; flex: none; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface); font-size: 1.3rem; line-height: 1; cursor: pointer; display: grid; place-items: center;
+}
+.swipe-btn:disabled { opacity: 0.35; cursor: default; }
+
+@media (max-width: 719px) {
+  .swipe {
+    display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%;
+    gap: 12px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: 16px;
+    margin-inline: -16px; padding: 4px 16px 10px;
+    scrollbar-width: none;
+  }
+  .swipe::-webkit-scrollbar { display: none; }
+  .swipe > * { scroll-snap-align: start; }
+  .swipe > .empty { width: calc(100vw - 32px); }
+  .recipe-grid.swipe { align-items: start; }
+
+  /* Tighter vertical rhythm */
+  .hero { padding: 20px 0 14px; }
+  .hero-sub { font-size: 1rem; margin: 6px 0 14px; }
+  .section { padding: 26px 0 36px; }
+  .subnav + .section { padding-top: 18px; }
+  .section-head { margin-bottom: 14px; gap: 12px; }
+  .resources-title { margin-top: 30px; }
+
+  /* One-row, swipeable month picker and genre chips */
+  .month-picker, .chip-row {
+    display: grid; grid-template-columns: none; grid-auto-flow: column; overflow-x: auto;
+    margin-inline: -16px; padding: 2px 16px 6px; scroll-padding-inline: 16px; scrollbar-width: none;
+    position: relative;
+  }
+  .month-picker { grid-auto-columns: 58px; }
+  .chip-row { grid-auto-columns: max-content; gap: 6px; }
+  .month-picker::-webkit-scrollbar, .chip-row::-webkit-scrollbar { display: none; }
+
+  /* Get to the cards faster: trim intros and stack controls into swipeable lines */
+  .phone-hide { display: none; }
+  .hero h1 { font-size: 2.4rem; }
+  .month-step { width: 38px; height: 38px; font-size: 1.4rem; }
+  .eyebrow { font-size: 0.78rem; }
+  h2 { font-size: 1.45rem; }
+  .section-head p { margin-top: 4px; }
+  .section-head > div:first-child p:empty { display: none; }
+
+  .progress-card { width: 100%; min-width: 0; padding: 10px 14px; display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; }
+  .progress-card .progress-label { display: none; }
+  .progress-card strong { font-size: 1.2rem; }
+  .progress-card .progress-bar { margin-top: 0; }
+
+  .season-picks, .movie-controls .controls {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin-inline: -16px; padding-inline: 16px; border-radius: 0;
+  }
+  .season-picks { padding-block: 10px; margin-bottom: 12px; }
+  .season-picks > *, .movie-controls .controls > * { flex: none; white-space: nowrap; }
+  .season-picks::-webkit-scrollbar, .movie-controls .controls::-webkit-scrollbar { display: none; }
+  .movie-controls { gap: 8px; margin-bottom: 12px; }
+
+  /* Season buttons: one full-width row of four */
+  .season-tabs { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; }
+  .season-tabs button { padding: 7px 2px; font-size: 0.84rem; white-space: nowrap; }
+  .section-head .controls { width: 100%; }
+}
