@@ -56,6 +56,56 @@ function writeUrl() {
   history.replaceState(null, "", url);
 }
 
+/* ---------- Swipe rows (phones) ----------
+   On narrow screens, CSS turns every .swipe grid into a horizontal, snap-scrolling row.
+   This adds a "3 / 27" counter, a progress track, and ‹ › buttons under each one. */
+function enhanceSwipes(root = document) {
+  root.querySelectorAll(".swipe").forEach((el) => {
+    if (!el._swipe) {
+      const bar = document.createElement("div");
+      bar.className = "swipe-bar";
+      bar.hidden = true;
+      bar.innerHTML = `<span class="swipe-count" aria-live="polite"></span><span class="swipe-track" aria-hidden="true"><span></span></span>
+        <button type="button" class="swipe-btn" data-dir="-1" aria-label="Previous">‹</button>
+        <button type="button" class="swipe-btn" data-dir="1" aria-label="Next">›</button>`;
+      el.after(bar);
+      const [count, track, prev, next] = [bar.querySelector(".swipe-count"), bar.querySelector(".swipe-track span"), ...bar.querySelectorAll("button")];
+      const items = () => [...el.children].filter((c) => !c.classList.contains("empty"));
+      const step = () => { const it = items(); return it[1] ? it[1].offsetLeft - it[0].offsetLeft : el.clientWidth; };
+      const update = () => {
+        const n = items().length;
+        const swiping = n > 1 && el.scrollWidth > el.clientWidth + 2;
+        bar.hidden = !swiping;
+        if (!swiping) return;
+        const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 4;
+        const i = atEnd ? n : Math.min(n, Math.round(el.scrollLeft / step()) + 1);
+        count.textContent = `${i} / ${n}`;
+        track.style.width = `${(i / n) * 100}%`;
+        prev.disabled = el.scrollLeft < 4;
+        next.disabled = atEnd;
+      };
+      let raf = 0;
+      el.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+      bar.addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-dir]");
+        if (b) el.scrollBy({ left: +b.dataset.dir * step(), behavior: "smooth" });
+      });
+      // When a filter, month or season changes which cards are shown, start again from the first card.
+      // Re-renders that keep the same cards (marking a movie watched, "pick one") keep their place.
+      const sig = () => items().map((c) => c.id || c.querySelector("h3")?.textContent).join("|");
+      let last = sig();
+      new MutationObserver(() => {
+        const now = sig();
+        if (now !== last) { el.scrollLeft = 0; last = now; }
+        update();
+      }).observe(el, { childList: true });
+      el._swipe = { update };
+    }
+    el._swipe.update();
+  });
+}
+window.addEventListener("resize", () => enhanceSwipes());
+
 /* ---------- Render: hero ---------- */
 function renderHero() {
   const season = seasonOf(state.month);
@@ -79,6 +129,8 @@ function renderHero() {
     return `<button role="tab" data-month="${m}" aria-selected="${m === state.month}" class="${m === today ? "is-today" : ""}" title="${name}${m === today ? " (this month)" : ""}">
       ${name.slice(0, 3)}<span class="dot" style="background:var(--${s})"></span></button>`;
   }).join("");
+  const picker = $("#month-picker"), sel = picker.querySelector('[aria-selected="true"]');
+  if (sel && picker.scrollWidth > picker.clientWidth) picker.scrollLeft = sel.offsetLeft - (picker.clientWidth - sel.offsetWidth) / 2;
 }
 
 /* ---------- Render: produce ---------- */
@@ -104,7 +156,7 @@ function renderProduce() {
     grid.innerHTML = `<div class="empty">Nothing matches. Try another filter or month.</div>`;
     return;
   }
-  grid.innerHTML = items.map((p) => {
+  const card = (p) => {
     const badges = [];
     if (p.peak.includes(m)) badges.push(`<span class="badge badge-peak">Peak</span>`);
     if (!p.months.includes(prevM(m))) badges.push(`<span class="badge badge-new">New</span>`);
@@ -119,7 +171,16 @@ function renderProduce() {
       ${uses.length ? `<div class="uses">🍳 ${uses.map((r) => `<a href="#recipe-${esc(r.id)}" data-recipe="${esc(r.id)}">${esc(r.title)}</a>`).join(" · ")}</div>` : ""}
       ${miniMonths(p)}
     </article>`;
+  };
+  const types = ["fruit", "vegetable", "herb"].filter((t) => items.some((p) => p.type === t));
+  grid.innerHTML = types.map((t) => {
+    const group = items.filter((p) => p.type === t);
+    return `<div class="shelf">
+      <h3 class="shelf-title">${esc(TYPE_LABEL[t])} <span class="muted">${group.length}</span></h3>
+      <div class="produce-row swipe">${group.map(card).join("")}</div>
+    </div>`;
   }).join("");
+  enhanceSwipes(grid);
 }
 
 /* ---------- Render: calendar ---------- */
@@ -319,7 +380,7 @@ function renderMovies() {
   // Progress
   const seen = movies.filter((m) => watched.has(m.id)).length;
   const pct = movies.length ? Math.round((seen / movies.length) * 100) : 0;
-  $("#movie-progress").innerHTML = `<div class="small muted">Your progress</div>
+  $("#movie-progress").innerHTML = `<div class="small muted progress-label">Your progress</div>
     <div><strong>${seen}</strong> <span class="muted">of ${movies.length} watched</span></div>
     <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${movies.length}" aria-valuenow="${seen}"><span style="width:${pct}%"></span></div>`;
 
@@ -382,7 +443,7 @@ function pickMovie() {
   state.picked = m.id;
   renderMovies();
   const card = document.getElementById(`movie-${m.id}`);
-  card?.scrollIntoView({ block: "center" });
+  card?.scrollIntoView({ block: "center", inline: "start" });
   card?.focus({ preventScroll: true });
 }
 function showMovie(id) {
@@ -391,7 +452,7 @@ function showMovie(id) {
   $("#world-only").checked = false; $("#la-only").checked = false;
   state.picked = id;
   renderMovies();
-  document.getElementById(`movie-${id}`)?.scrollIntoView({ block: "center" });
+  document.getElementById(`movie-${id}`)?.scrollIntoView({ block: "center", inline: "start" });
 }
 
 /* ---------- Tabs (hash routing) ---------- */
@@ -416,6 +477,7 @@ function showTab({ scroll = true } = {}) {
   const title = { food: "Food", camping: "Camping", movies: "Movies", "open-source": "Open source" }[state.tab];
   document.title = `${title} · Seasons LA`;
   if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  enhanceSwipes(); // rows in a hidden tab measure as zero width, so refresh on show
 }
 
 /* ---------- Wiring ---------- */
@@ -427,6 +489,7 @@ function renderAll() {
   renderCamps();
   renderMovies();
   renderTheaters();
+  enhanceSwipes();
 }
 function setMonth(m) {
   state.month = m;
@@ -487,7 +550,7 @@ function bind() {
     showTab({ scroll: false });
     const card = document.getElementById(`recipe-${r.id}`);
     card.querySelector("details").open = true;
-    card.scrollIntoView({ block: "center" });
+    card.scrollIntoView({ block: "center", inline: "start" });
   });
 
   // Movies
@@ -532,6 +595,7 @@ async function init() {
   produceById = new Map(produce.map((p) => [p.id, p]));
   renderAll();
   renderResources();
+  enhanceSwipes();
   loadGitHub();
 }
 
